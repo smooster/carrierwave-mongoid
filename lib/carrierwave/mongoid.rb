@@ -70,7 +70,7 @@ module CarrierWave
         # The custom version of that method forces the callbacks to be
         # ran and so does the upload.
         def #{column}_will_change!
-          changed_attributes["#{column}"] = send(:"\#{column}")
+          changed_attributes["#{column}"] = send(:"#{column}")
         end
 
         def find_previous_model_for_#{column}
