@@ -64,6 +64,14 @@ module CarrierWave
         def #{column}_changed?
           changed_attributes.has_key?("#{column}")
         end
+      
+        # The default Mongoid attribute_will_change! method is not enough
+        # when we want to upload a new file in an existing embedded document.
+        # The custom version of that method forces the callbacks to be
+        # ran and so does the upload.
+        def #{column}_will_change!
+          changed_attributes["#{column}"] = send(:"\#{column}")
+        end
 
         def find_previous_model_for_#{column}
           if self.embedded?
